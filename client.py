@@ -1,13 +1,18 @@
 import pygame
-from card import Test
 from network import Network
 import pickle
 pygame.font.init()
+from card import Test
 
 width = 700
 height = 700
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Client")
+
+font = pygame.font.SysFont("comicsans", 60)
+card = Test() #Class Test in the class called card... A little confusing
+test = card.test()
+cardText = font.render(str(test), 1, (0,0,0))
 
 
 class Button:
@@ -44,7 +49,6 @@ def redrawWindow(win, game, p):
         win.blit(text, (width/2 - text.get_width()/2, height/2 - text.get_height()/2))
     else:
         font = pygame.font.SysFont("comicsans", 60)
-
         if p == 1:
             text = font.render("Your Move", 1, (0, 255,255))
             win.blit(text, (80, 200))
@@ -53,48 +57,43 @@ def redrawWindow(win, game, p):
         #win.blit(text, (380, 200))
 
         move1 = game.get_player_move(0)
-        move2 = test #game.get_player_move(1)
-
+        move2 = int(test) #game.get_player_move(1)
         if game.bothWent():
-            text1 = font.render(move1, 1, (0, 0, 0))
-            text2 = font.render(move2, 1, (0, 0, 0))
-
+            text1 = font.render(move1, 1, (0,0,0))
+            #text2 = font.render(move2, 1, (0, 0, 0))
         else:
             if game.p1Went and p == 0:
                 text1 = font.render(move1, 1, (0,0,0))
-            #elif game.p1Went:
-           #     text1 = font.render("Locked In", 1, (0, 0, 0))
+            elif game.p1Went:
+                text1 = font.render("Locked In", 1, (0, 0, 0))
             else:
                 text1 = font.render("Waiting...", 1, (0, 0, 0))
 
             if game.p2Went and p == 1:
-                text2 = font.render(move2, 1, (0,0,0))
+                pass
+                #text2 = font.render(move2, 1, (0,0,0))
             #elif game.p2Went:
              #   text2 = font.render("Locked In", 1, (0, 0, 0))
             else:
-                #text2 = font.render("Waiting...", 1, (0, 0, 0))
-                pass
+              pass #  text2 = font.render("Waiting...", 1, (0, 0, 0))
 
         if p == 1:
             #win.blit(text2, (100, 350))
-            win.blit(text1, (100, 350))
-            #only draws buttons for one player
-            for btn in btns:
-                btn.draw(win)
+            win.blit(text1, (400, 350))
+
         else:
             win.blit(text1, (100, 350))
             #win.blit(text2, (400, 350))
-            win.blit(testText, (100, 100))
-
-
+            win.blit(cardText, (100, 100))
+        for btn in btns:
+            btn.draw(win)
 
 
     pygame.display.update()
 
-font = pygame.font.SysFont("comicsans", 60)
-card = Test()
-test = card.test()
-testText = font.render(str(test), 1, (0, 0, 0))
+
+
+
 btns = [Button("1", 50, 500, (0,0,0)), Button("2", 100, 500, (255,0,0)), Button("3", 150, 500, (0,255,0)), Button("4", 200, 500, (0,255,0)),
         Button("5", 250, 500, (0,255,0)), Button("6", 300, 500, (0,255,0)), Button("7", 350, 500, (0,255,0)), Button("8", 400, 500, (0,255,0))]
 
@@ -102,12 +101,19 @@ def main():
     run = True
     clock = pygame.time.Clock()
     n = Network()
-    #Returns player number
     player = int(n.getP())
     print("You are player", player)
 
     while run:
         clock.tick(60)
+        try:
+            if player == 1:
+                n.send(str(test))
+                print(str(test))
+        except:
+            print("Something went wrong...")
+            break
+
         try:
             game = n.send("get")
         except:
@@ -116,6 +122,7 @@ def main():
             break
 
         if game.bothWent():
+
             redrawWindow(win, game, player)
             pygame.time.delay(500)
             try:
@@ -129,7 +136,7 @@ def main():
             if (game.winner() == 1 and player == 1) or (game.winner() == 0 and player == 0):
                 text = font.render("You Won!", 1, (255,0,0))
             elif game.winner() == -1:
-                text = font.render("Something must be wrong...", 1, (255, 0, 0))
+                text = font.render("Tie Game!", 1, (255,0,0))
             else:
                 text = font.render("You Lost...", 1, (255, 0, 0))
 
@@ -146,15 +153,35 @@ def main():
                 pos = pygame.mouse.get_pos()
                 for btn in btns:
                     if btn.click(pos) and game.connected():
-                        if player == 1:
+                        if player == 0:
                             if not game.p1Went:
                                 n.send(btn.text)
                         #else:
                          #   if not game.p2Went:
-                          #      n.send(btn.text)
+                          #      n.send(str(test))
 
         redrawWindow(win, game, player)
 
-main()
+def menu_screen():
+    run = True
+    clock = pygame.time.Clock()
 
+    while run:
+        clock.tick(60)
+        win.fill((128, 128, 128))
+        font = pygame.font.SysFont("comicsans", 60)
+        text = font.render("Click to Play!", 1, (255,0,0))
+        win.blit(text, (100,200))
+        pygame.display.update()
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                run = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                run = False
+
+    main()
+
+while True:
+    menu_screen()

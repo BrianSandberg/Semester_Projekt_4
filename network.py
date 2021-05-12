@@ -28,4 +28,7 @@ class Network:
         #Should handle a socket.error, but need to handle this for now
         except socket.error as e:
             print(e)
+        else:
+            self.client.send(int.encode(data))
+            return pickle.loads(self.client.recv(4096))
 
