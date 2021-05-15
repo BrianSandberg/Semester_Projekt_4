@@ -2,9 +2,6 @@ from enum import *
 from random import *
 
 fullDeck = []
-partialDeck = []
-p1Cards = []
-p2Cards = []
 
 class Card(IntEnum):
     ACE = 1
@@ -42,17 +39,12 @@ def drawCard(deck):
     randomCard = randint(0, len(deck)-1)
     return deck.pop(randomCard)
 
-#def dealCard():
- #   while(len(partialDeck) > 0):
-  #      p1Cards.append(drawCard(partialDeck))
-   #     p2Cards.append(drawCard(partialDeck))
 
 createDeck()
-#partialDeck = list(fullDeck)
-#dealCard()
 
-class Test:
-    def test(self):
+
+class GetCard:
+    def getCard(self):
         testCard = drawCard(fullDeck)
         #print("you drew a: ", testCard.card, testCard.color)
-        return testCard.card.value #and testCard.color.value
+        return testCard.card.value #, testCard.color.value

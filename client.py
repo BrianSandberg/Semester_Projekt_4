@@ -2,17 +2,19 @@ import pygame
 from network import Network
 import pickle
 pygame.font.init()
-from card import Test
+from card import GetCard
 
 width = 700
 height = 700
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Client")
 
+#Vi laver faktisk ikke et nyt deck her, men bare trækker et random kort hver gang
+#Når vi når lidt længere skal vi lave et nyt deck der kan itereres over
 font = pygame.font.SysFont("comicsans", 60)
-card = Test() #Class Test in the class called card... A little confusing
-test = card.test()
-cardText = font.render(str(test), 1, (0,0,0))
+card = GetCard() #Class Test in the class called card... A little confusing
+getCard = card.getCard()
+cardText = font.render(str(getCard), 1, (0,0,0))
 
 
 class Button:
@@ -57,7 +59,7 @@ def redrawWindow(win, game, p):
         #win.blit(text, (380, 200))
 
         move1 = game.get_player_move(0)
-        move2 = int(test) #game.get_player_move(1)
+        #move2 = int(getCard) #game.get_player_move(1)
         if game.bothWent():
             text1 = font.render(move1, 1, (0,0,0))
             #text2 = font.render(move2, 1, (0, 0, 0))
@@ -77,16 +79,18 @@ def redrawWindow(win, game, p):
             else:
               pass #  text2 = font.render("Waiting...", 1, (0, 0, 0))
 
-        if p == 1:
+        if p == 0:
             #win.blit(text2, (100, 350))
             win.blit(text1, (400, 350))
+            for btn in btns:
+                btn.draw(win)
 
         else:
             win.blit(text1, (100, 350))
             #win.blit(text2, (400, 350))
             win.blit(cardText, (100, 100))
-        for btn in btns:
-            btn.draw(win)
+            #print(str(getCard))
+
 
 
     pygame.display.update()
@@ -95,7 +99,9 @@ def redrawWindow(win, game, p):
 
 
 btns = [Button("1", 50, 500, (0,0,0)), Button("2", 100, 500, (255,0,0)), Button("3", 150, 500, (0,255,0)), Button("4", 200, 500, (0,255,0)),
-        Button("5", 250, 500, (0,255,0)), Button("6", 300, 500, (0,255,0)), Button("7", 350, 500, (0,255,0)), Button("8", 400, 500, (0,255,0))]
+        Button("5", 250, 500, (0,255,0)), Button("6", 300, 500, (0,255,0)), Button("7", 350, 500, (0,255,0)), Button("8", 400, 500, (0,255,0)),
+        Button("9", 450, 500, (0,255,0)), Button("10", 500, 500, (0,255,0)), Button("11", 550, 500, (0,255,0)), Button("12", 600, 500, (0,255,0)),
+        Button("13", 650, 500, (0,255,0))]
 
 def main():
     run = True
@@ -108,8 +114,8 @@ def main():
         clock.tick(60)
         try:
             if player == 1:
-                n.send(str(test))
-                print(str(test))
+                n.send(str(getCard))
+                #print(str(getCard))
         except:
             print("Something went wrong...")
             break
@@ -158,7 +164,7 @@ def main():
                                 n.send(btn.text)
                         #else:
                          #   if not game.p2Went:
-                          #      n.send(str(test))
+                          #      n.send(str(getCard))
 
         redrawWindow(win, game, player)
 

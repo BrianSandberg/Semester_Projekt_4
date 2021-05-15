@@ -1,10 +1,11 @@
 import socket
 import pickle
 
-
+#Class network is responsible for connecting to the server.
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #Local ip of computer running the server
         self.server = "192.168.0.42"
         self.port = 5556
         self.addr = (self.server, self.port)
