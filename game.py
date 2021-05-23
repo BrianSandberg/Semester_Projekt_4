@@ -28,6 +28,19 @@ class Game:
     def bothWent(self):
         return self.p1Went and self.p2Went
 
+    def firstround(self):
+        p1 = self.moves[0]
+        p2 = self.moves[1]
+
+        guess = 0
+        if int(p1) < int(p2):
+            guess = 1
+        elif int(p1) > int(p2):
+            guess = -1
+        else:
+            guess = 0
+        return guess
+
     def winner(self):
 
         p1 = self.moves[0]
@@ -38,7 +51,6 @@ class Game:
             winner = 1
         else:
             winner = 0
-
 
         return winner
 

@@ -40,11 +40,10 @@ def drawCard(deck):
     return deck.pop(randomCard)
 
 
-createDeck()
+#createDeck()
 
 
-class GetCard:
-    def getCard(self):
-        testCard = drawCard(fullDeck)
-        #print("you drew a: ", testCard.card, testCard.color)
-        return testCard.card.value #, testCard.color.value
+def getCard():
+    testCard = drawCard(fullDeck)
+    #print("you drew a: ", testCard.card, testCard.color)
+    return testCard.card.value #, testCard.color.value
