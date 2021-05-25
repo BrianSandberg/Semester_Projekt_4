@@ -39,11 +39,6 @@ def drawCard(deck):
     randomCard = randint(0, len(deck)-1)
     return deck.pop(randomCard)
 
-
-#createDeck()
-
-
 def getCard():
     testCard = drawCard(fullDeck)
-    #print("you drew a: ", testCard.card, testCard.color)
-    return testCard.card.value #, testCard.color.value
+    return testCard.card.value

@@ -45,10 +45,7 @@ def threaded_client(conn, p, gameId):
                     #reset the game, both players played - Is sent from client side
                     if data == "reset":
                         game.resetWent()
-                    # If its not "get" its "move" -  The client sends the move to the server, which updates the game and sends it to client
-                    elif data != "get":
-                        game.play(p, data)
-                    #Last move is "get" - sends the game to the client - Is sent every frame
+                    #Last action is "get" - sends the game to the client - Is sent every frame
 
                     reply = game
                     conn.sendall(pickle.dumps(reply))
@@ -65,8 +62,6 @@ def threaded_client(conn, p, gameId):
         pass
     idCount -= 1
     conn.close()
-
-
 
 while True:
     conn, addr = s.accept()
