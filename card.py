@@ -38,7 +38,3 @@ def createDeck():
 def drawCard(deck):
     randomCard = randint(0, len(deck)-1)
     return deck.pop(randomCard)
-
-def getCard():
-    testCard = drawCard(fullDeck)
-    return testCard.card.value

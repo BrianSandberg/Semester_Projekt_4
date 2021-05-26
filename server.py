@@ -26,7 +26,6 @@ connected = set() # Stores IP of clients in sets
 games = {} # Dictionary that stores the games, ID is key and game object is value
 idCount = 0 # Tracks current ID, so 2 games cant have same ID
 
-
 def threaded_client(conn, p, gameId):
     #Global variable can be used inside and outside of function
     global idCount
@@ -43,9 +42,14 @@ def threaded_client(conn, p, gameId):
                 if not data:
                     break
                 else:
-                    #the only moves we send are "get" or a move - sends an updated version of the game back to the client -
-                    # get is sent every frame
-                    # Move is sent every time a player makes a move
+                    #reset the game, both players played - Is sent from client side
+                    if data == "reset":
+                        game.resetWent()
+                    # If its not "get" its "move" -  The client sends the move to the server, which updates the game and sends it to client
+                    elif data != "get":
+                        game.play(p, data)
+                    #Last move is "get" - sends the game to the client - Is sent every frame
+
                     reply = game
                     conn.sendall(pickle.dumps(reply))
             else:
@@ -62,13 +66,15 @@ def threaded_client(conn, p, gameId):
     idCount -= 1
     conn.close()
 
+
+
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
 
     idCount += 1
     p = 0
-    gameId = (idCount - 1)//2 # Creates a new game i there is an uneven number of players
+    gameId = (idCount - 1)//2 # Creates a new game if there is an uneven number of players
     if idCount % 2 == 1:
         games[gameId] = Game(gameId)
         print("Creating a new game...")

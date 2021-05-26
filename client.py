@@ -109,12 +109,11 @@ btns = [Button("1", 50, 500, (0, 0, 0), 30, 30), Button("2", 100, 500, (255, 0, 
 def main():
     run = True
     #Global variable so it can be accessed outside of the function
-    #turnCount variable keeps track of the number of turns - Is responsible for resetting upon reaching 2 consecutive turns
-    global turnCount
+    #Since the player is either number 0 or 1 this variable is called p1turn (Actually player 2 turn)
     global p1turn
     global getCard
-    global wrongGuess
     p1turn = False
+    #turnCount variable keeps track of the number of turns - Is responsible for resetting upon reaching 2 consecutive turns
     turnCount = 0
     wrongGuess = 0
     newCard = True

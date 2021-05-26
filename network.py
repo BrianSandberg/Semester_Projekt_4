@@ -18,6 +18,7 @@ class Network:
     def connect(self):
         try:
             self.client.connect(self.addr)
+            #Returns player number of the client
             return self.client.recv(2048).decode()
         except:
             pass
@@ -25,10 +26,8 @@ class Network:
     def send(self, data):
         try:
             self.client.send(str.encode(data))
-            #Send object data - use pickle.loads
+            #Send string data - Receive object data
+            # use pickle.loads to unpickle object
             return pickle.loads(self.client.recv(4096))
         except socket.error as e:
             print(e)
-        else:
-            self.client.send(int.encode(data))
-            return pickle.loads(self.client.recv(4096))
