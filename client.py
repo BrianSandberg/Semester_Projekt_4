@@ -1,6 +1,5 @@
 import pygame
 from network import Network
-import pickle
 
 pygame.font.init()
 from card import *
