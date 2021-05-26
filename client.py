@@ -9,10 +9,7 @@ height = 700
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Client")
 
-
-
 createDeck()
-
 
 #fulldeck is the deck we pull cards from - Created by createDeck()
 getCard = drawCard(fullDeck).card.value

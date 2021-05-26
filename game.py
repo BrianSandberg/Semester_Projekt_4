@@ -30,4 +30,3 @@ class Game:
             guess = 0
 
         return guess
-

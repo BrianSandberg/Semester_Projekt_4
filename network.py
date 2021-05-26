@@ -27,7 +27,6 @@ class Network:
             self.client.send(str.encode(data))
             #Send object data - use pickle.loads
             return pickle.loads(self.client.recv(4096))
-
         except socket.error as e:
             print(e)
         else:
