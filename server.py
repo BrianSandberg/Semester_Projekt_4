@@ -1,3 +1,4 @@
+
 import socket
 from _thread import *
 import pickle
@@ -43,8 +44,8 @@ def threaded_client(conn, p, gameId):
                     break
                 else:
                     #reset the game, both players played - Is sent from client side
-                    if data == "reset":
-                        game.resetWent()
+                    #if data == "reset":
+                        #game.resetWent()
                     #Last action is "get" - sends the game to the client - Is sent every frame
 
                     reply = game

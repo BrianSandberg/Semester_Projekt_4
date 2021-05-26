@@ -1,3 +1,4 @@
+
 import socket
 import pickle
 
@@ -32,4 +33,3 @@ class Network:
         else:
             self.client.send(int.encode(data))
             return pickle.loads(self.client.recv(4096))
-

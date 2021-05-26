@@ -9,15 +9,14 @@ height = 700
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Client")
 
-# Vi laver faktisk ikke et nyt deck her, men bare trækker et random kort hver gang
-# Når vi når lidt længere skal vi lave et nyt deck der kan itereres over
+
+
 createDeck()
+
 
 #fulldeck is the deck we pull cards from - Created by createDeck()
 getCard = drawCard(fullDeck).card.value
-font = pygame.font.SysFont("comicsans", 60)
-
-
+font = pygame.font.SysFont("ink free", 60)
 
 class Button:
     def __init__(self, text, x, y, color, width, height):
@@ -30,13 +29,17 @@ class Button:
 
     def draw(self, win):
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height))
-        font = pygame.font.SysFont("comicsans", 40)
+
+        font = pygame.font.SysFont("ink free", 40)
+
         text = font.render(self.text, 1, (255, 255, 255))
         win.blit(text, (self.x + round(self.width / 2) - round(text.get_width() / 2),
                         self.y + round(self.height / 2) - round(text.get_height() / 2)))
 
     def click(self, pos):
-        # x and y of mouse position
+
+        # x1 and y1 is the mouse position
+
         x1 = pos[0]
         y1 = pos[1]
         if self.x <= x1 <= self.x + self.width and self.y <= y1 <= self.y + self.height:
@@ -49,11 +52,13 @@ def redrawWindow(win, game, p):
     win.fill((128, 128, 128))
 
     if not (game.connected()):
-        font = pygame.font.SysFont("comicsans", 80)
+
+        font = pygame.font.SysFont("ink free", 80)
+
         text = font.render("Waiting for Player...", 1, (255, 0, 0), True)
         win.blit(text, (width / 2 - text.get_width() / 2, height / 2 - text.get_height() / 2))
     else:
-        font = pygame.font.SysFont("comicsans", 60)
+        font = pygame.font.SysFont("ink free", 60)
         if p == 1:
             text = font.render("Your Move", 1, (0, 255, 255))
             win.blit(text, (80, 200))
@@ -97,11 +102,9 @@ def redrawWindow(win, game, p):
 
 
 btns = [Button("1", 50, 500, (0, 0, 0), 30, 30), Button("2", 100, 500, (255, 0, 0), 30, 30), Button("3", 150, 500, (0, 255, 0), 30, 30),
-        Button("4", 200, 500, (0, 255, 0), 30, 30),
-        Button("5", 250, 500, (0, 255, 0), 30, 30), Button("6", 300, 500, (0, 255, 0), 30, 30), Button("7", 350, 500, (0, 255, 0), 30, 30),
-        Button("8", 400, 500, (0, 255, 0), 30, 30),
-        Button("9", 450, 500, (0, 255, 0), 30, 30), Button("10", 500, 500, (0, 255, 0), 30, 30), Button("11", 550, 500, (0, 255, 0), 30, 30),
-        Button("12", 600, 500, (0, 255, 0), 30, 30),
+        Button("4", 200, 500, (0, 255, 0), 30, 30), Button("5", 250, 500, (0, 255, 0), 30, 30), Button("6", 300, 500, (0, 255, 0), 30, 30),
+        Button("7", 350, 500, (0, 255, 0), 30, 30),Button("8", 400, 500, (0, 255, 0), 30, 30), Button("9", 450, 500, (0, 255, 0), 30, 30),
+        Button("10", 500, 500, (0, 255, 0), 30, 30), Button("11", 550, 500, (0, 255, 0), 30, 30),Button("12", 600, 500, (0, 255, 0), 30, 30),
         Button("13", 650, 500, (0, 255, 0), 30, 30)]
 
 #turnbtn = Button("Change Dealer", width/2, 0, (0,0,0), 300, 100)
@@ -172,7 +175,7 @@ def main():
                 print("Couldn't get game")
                 break
 
-            font = pygame.font.SysFont("comicsans", 90)
+            font = pygame.font.SysFont("ink free", 60)
             if game.roundRules() == 1:
                 turnCount = turnCount + 1
                 text = font.render("Guess a higher number", 1, (255,0,0))
@@ -186,9 +189,9 @@ def main():
                 newCard= True
 
             if p1turn and player == 1:
-                win.blit(text, (width / 2 - text.get_width() / 2, height / 2 - text.get_height() / 2))
+                win.blit(text, (width / 2 - text.get_width() / 2, height / 2 - text.get_height()))
             elif not p1turn and player == 0:
-                win.blit(text, (width / 2 - text.get_width() / 2, height / 2 - text.get_height() / 2))
+                win.blit(text, (width / 2 - text.get_width() / 2, height / 2 - text.get_height()))
 
             pygame.display.update()
             pygame.time.delay(2000)
@@ -221,7 +224,7 @@ def menu_screen():
     while run:
         clock.tick(60)
         win.fill((128, 128, 128))
-        font = pygame.font.SysFont("comicsans", 60)
+        font = pygame.font.SysFont("ink free", 60)
         text = font.render("Click to Play!", 1, (255, 0, 0))
         win.blit(text, (100, 200))
         pygame.display.update()
