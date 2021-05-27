@@ -13,7 +13,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # For safety and errorhandling, we try if the port is unused and can bind to the socket, together with the server
 try:
-    s.bind(("192.168.0.42", 5556))
+    s.bind((server, port))
 except socket.error as e:
     print(str(e))
 
