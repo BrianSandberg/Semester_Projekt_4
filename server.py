@@ -44,7 +44,7 @@ def threaded_client(conn, p, gameId):
                     #reset the game, both players played - Is sent from client side
                     if data == "reset":
                         game.resetWent()
-                    # If its not "get" its "move" -  The client sends the move to the server, which updates the game and sends it to client
+                    # If its not "get" its a move action -  The client sends the move to the server, which updates the game and sends it to client
                     elif data != "get":
                         game.play(p, data)
                     #Last move is "get" - sends the game to the client - Is sent every frame

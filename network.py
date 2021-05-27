@@ -18,6 +18,7 @@ class Network:
         try:
             self.client.connect(self.addr)
             #Returns player number of the client
+            #see line 31 in server.py
             return self.client.recv(2048).decode()
         except:
             pass

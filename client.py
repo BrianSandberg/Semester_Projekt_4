@@ -30,6 +30,7 @@ class Button:
         font = pygame.font.SysFont("ink free", 40)
 
         text = font.render(self.text, 1, (255, 255, 255))
+        #blit() copies the given object onto the window, at the given coordinates
         win.blit(text, (self.x + round(self.width / 2) - round(text.get_width() / 2),
                         self.y + round(self.height / 2) - round(text.get_height() / 2)))
 
@@ -94,7 +95,7 @@ def redrawWindow(win, game, p):
             else:
                 win.blit(text1, (100,350))
                 win.blit((font.render(str(getCard), 1, (255,0,0))), (100,100))
-
+    #will only show the surface gotten from the 'pygame.display.set_mode() method call - See line 9
     pygame.display.update()
 
 
@@ -175,10 +176,16 @@ def main():
             font = pygame.font.SysFont("ink free", 60)
             if game.roundRules() == 1:
                 turnCount = turnCount + 1
-                text = font.render("Guess a higher number", 1, (255,0,0))
+                if turnCount == 2:
+                    text = font.render("Incorrect guess", 1 , (255,0,0))
+                else:
+                    text = font.render("Guess a higher number", 1, (255,0,0))
             elif game.roundRules() == -1:
                 turnCount = turnCount + 1
-                text = font.render("Guess a lower number", 1, (255,0,0))
+                if turnCount == 2:
+                    text = font.render("Incorrect guess", 1 , (255,0,0))
+                else:
+                    text = font.render("Guess a lower number", 1, (255,0,0))
             elif game.roundRules() == 0:
                 turnCount = 0
                 wrongGuess = 0
