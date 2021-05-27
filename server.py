@@ -68,6 +68,8 @@ def threaded_client(conn, p, gameId):
 
 
 while True:
+    #conn = s
+    #addr = (server, local address on port)
     conn, addr = s.accept()
     print("Connected to:", addr)
 

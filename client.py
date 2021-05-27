@@ -124,6 +124,15 @@ def main():
 
     while run:
         clock.tick(60)
+
+        try:
+            game = n.send("get")
+
+        except:
+            run = False
+            print("Couldn't get game")
+            break
+
         if turnCount == 2:
             turnCount = 0
             wrongGuess = wrongGuess + 1
@@ -149,14 +158,6 @@ def main():
 
         except:
             print("Something went wrong...")
-            break
-
-        try:
-            game = n.send("get")
-
-        except:
-            run = False
-            print("Couldn't get game")
             break
 
         if game.bothWent():
