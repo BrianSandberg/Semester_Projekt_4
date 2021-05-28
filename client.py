@@ -45,7 +45,6 @@ class Button:
         else:
             return False
 
-
 def redrawWindow(win, game, p):
     win.fill((128, 128, 128))
 
@@ -117,7 +116,7 @@ def main():
     #turnCount variable keeps track of the number of turns - Is responsible for resetting upon reaching 2 consecutive turns
     turnCount = 0
     wrongGuess = 0
-    newCard = True
+    newCard = False
     clock = pygame.time.Clock()
     n = Network()
     player = int(n.getP())
@@ -141,7 +140,11 @@ def main():
 
         #Updates getCard which is the current card being played in the game
         while newCard:
-            getCard = drawCard(fullDeck).card.value
+            if len(fullDeck) > 0:
+                getCard = drawCard(fullDeck).card.value
+            else:
+                print("The deck has run out of cards, please restart the client")
+                pygame.quit()
             if wrongGuess == 3:
                 if p1turn:
                     p1turn = False
@@ -177,13 +180,13 @@ def main():
             if game.roundRules() == 1:
                 turnCount = turnCount + 1
                 if turnCount == 2:
-                    text = font.render("Incorrect guess", 1 , (255,0,0))
+                    text = font.render("Incorrect guess", 1, (255,0,0))
                 else:
                     text = font.render("Guess a higher number", 1, (255,0,0))
             elif game.roundRules() == -1:
                 turnCount = turnCount + 1
                 if turnCount == 2:
-                    text = font.render("Incorrect guess", 1 , (255,0,0))
+                    text = font.render("Incorrect guess", 1, (255,0,0))
                 else:
                     text = font.render("Guess a lower number", 1, (255,0,0))
             elif game.roundRules() == 0:
@@ -217,6 +220,8 @@ def main():
 
                         else:
                             game = n.send(btn.text)
+
+
 
         redrawWindow(win, game, player)
 
