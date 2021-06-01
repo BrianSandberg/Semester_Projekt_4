@@ -9,16 +9,16 @@ from game import Game
 server = "192.168.0.42"
 port = 5556
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # For safety and errorhandling, we try if the port is unused and can bind to the socket, together with the server
 try:
-    s.bind((server, port))
+    sock.bind((server, port))
 except socket.error as e:
     print(str(e))
 
 # sock.listen() "opens" up the port so that we can start connecting to it. The argument is the max number of connections
-s.listen()
+sock.listen()
 print("Waiting for a connection, Server Started")
 
 connected = set() # Stores IP of clients in sets
@@ -30,7 +30,6 @@ def threaded_client(conn, p, gameId):
     global idCount
     conn.send(str.encode(str(p)))
 
-    reply = ""
     while True:
         try:
             data = conn.recv(4096).decode()
@@ -70,7 +69,7 @@ def threaded_client(conn, p, gameId):
 while True:
     #conn = s
     #addr = (server, local address on port)
-    conn, addr = s.accept()
+    conn, addr = sock.accept()
     print("Connected to:", addr)
 
     idCount += 1
